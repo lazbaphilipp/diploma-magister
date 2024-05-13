@@ -1,0 +1,23 @@
+\documentclass[a4paper,14pt]{article}
+
+\input{include/preamble}
+
+\usepackage[figure,table]{totalcount}
+
+\author{Лазба Филипп}
+\title{}
+\date{\today}
+
+\renewcommand{\baselinestretch}{1.15} % put the factor in the second argument 
+\usepackage{ragged2e}
+\justifying{}
+
+\begin{document}
+	\include{include/title}	
+	\include{include/annotation}
+	\tableofcontents{}
+	\include{include/terms-and-abbreviations}
+	\include{include/introduction}
+	\include{include/sect1-distributions}
+	\include{include/references}
+\end{document}
