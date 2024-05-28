@@ -4,10 +4,11 @@
         "name": "lualatex",
         "command": "lualatex",
         "args": [
+          "--shell-escape",
           "-synctex=1",
           "-interaction=nonstopmode",
           "-file-line-error",
-          "%DOC%"
+          "%DOC%",
         ]
       },
       {

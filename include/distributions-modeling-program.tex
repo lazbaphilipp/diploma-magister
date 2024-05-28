@@ -1,0 +1,42 @@
+\section{Листинг кода программы моделирования АР.}%
+\label{appendix:arrays-code-appendix}
+
+\begin{minted}[
+    linenos,
+    breaklines,
+    frame=single,
+    framesep=10pt
+]{matlab}
+function [distributionValues,phases] = distribution_former(dx,f, phi,amp_dB)
+if(size(phi) ~= size(amp_dB))
+    error("sizes unequal")
+end
+
+amp = db2pow(amp_dB);
+distributionValues = zeros(size(dx));
+phases = zeros(length(dx),length(phi));
+for ind = 1:length(phi)
+phases(:,ind) = 2.*pi.*f.*dx.*sind(phi(ind)) /physconst("Lightspeed");
+distributionValues = distributionValues + amp(ind).*exp(1i.*phases(:,ind));
+end
+end    
+\end{minted}
+
+
+\begin{minted}[
+    linenos,
+    breaklines,
+    frame=single,
+    framesep=10pt
+]{matlab}
+function [channel_res,theta] = aec_simulation(dVals,dx,f, resolution, theta)
+if nargin < 4
+    resolution = 0.5;
+end
+if nargin < 5
+    theta = (-90:resolution:90);
+end
+channel_coeff = exp(1i.* (-2.*pi.*f.*dx.*sind(theta) /physconst("Lightspeed")));
+channel_res = sum(dVals.*channel_coeff,1);
+end 
+\end{minted}

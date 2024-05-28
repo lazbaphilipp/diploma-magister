@@ -13,11 +13,33 @@
 \justifying{}
 
 \begin{document}
-	\include{include/title}	
-	\include{include/annotation}
-	\tableofcontents{}
-	\include{include/terms-and-abbreviations}
-	\include{include/introduction}
-	\include{include/sect1-distributions}
-	\include{include/references}
+\include{include/title}
+\include{include/annotation}
+\tableofcontents{}
+\include{include/terms-and-abbreviations}
+\include{include/introduction}
+\section{Литературный обзор}\label{sect:review}
+\input{include/equally-spaced}
+\input{include/distributions-theory}
+\input{include/daa}
+\input{include/iterative-theory}
+\input{include/interpolation-theory}
+\input{include/mimo-theory}
+%
+\include{include/distributions-modeling}
+\include{include/iterative-modeling}
+\include{include/interpolation-modeling}
+\include{include/mimo-modeling}
+\include{include/conclusions}
+\include{include/references}
+% \appendix
+% \include{include/distributions-modeling-program}
+\appendix
+\renewcommand{\thesection}{\Asbuk{section}} % To use Cyrillic letters for appendix sections
+\titleformat{\section}[block]{\Large\normalfont\bfseries\raggedright}{\appendixname\ \thesection.}{1ex}{}
+\include{include/distributions-modeling-program}
+\include{include/mimo-modeling-program}
+
+
+
 \end{document}

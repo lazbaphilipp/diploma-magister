@@ -24,8 +24,12 @@
 %%% Работа с картинками
 \usepackage{graphicx}  % Для вставки рисунков
 \graphicspath{%
-	{images/sect1-equally-spaced},
-	{images/sect2-distributions},
+	{images/equally-spaced-arrays},
+	{images/array-distributions-theory},
+	{images/array-distributions-modeling},
+	{images/interpolation},
+	{images/iterative},
+	{images/mimo},
 }  % папки с картинками
 %\usepackage{subfig}
 \setlength\fboxsep{3pt} % Отступ рамки \fbox{} от рисунка
@@ -40,7 +44,7 @@
 \usepackage{float}
 
 % Работа с графиками
-\usepackage{tikz} 
+\usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
 
@@ -58,7 +62,7 @@
 	\UseTblrTemplate{caption-tag}{default}
 	\UseTblrTemplate{caption-sep}{default}
 	\UseTblrTemplate{caption-text}{default}
-	
+
 }
 
 \DefTblrTemplate{contfoot-text}{default}{Продолжение на следующей странице}
@@ -82,6 +86,7 @@
 \usepackage{array}
 
 %%% Программирование
+\usepackage{tcolorbox}
 \usepackage{etoolbox} % логические операторы
 
 %%% Страница
@@ -94,10 +99,28 @@
 %%%
 \righthyphenmin=2
 
-%%%
+%%% Настройка отображения содержания
 \usepackage{tocloft}
 \renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % for sections
+%%% Заголовки
+\usepackage{titlesec}
+\titleformat{\section}{\Large\normalfont\bfseries\raggedright}{\arabic{section}.}{0.5ex}{}
+\titleformat{\subsection}{\large\normalfont\bfseries\raggedright}{\arabic{section}.\arabic{subsection}.}{0.5ex}{}
+\titleformat{\subsubsection}{\normalfont\bfseries\raggedright}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.}{0.5ex}{}
+\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+
+\providecommand\phantomsection{}
+%\newcommand\schap[1]{\chapter*{#1} \addcontentsline{toc}{chapter}{#1} \phantomsection}
+\newcommand\ssect[1]{\section*{#1} \phantomsection \addcontentsline{toc}{section}{#1} \markboth{#1}{#1}}
+\newcommand{\rwn}{\the\numexpr\value{rownum}-1\relax}
+%%% Custom appendix naming
+\usepackage[toc,page]{appendix}
+\renewcommand\appendixname{Приложение}
+\renewcommand\appendixpagename{Приложения}
+\renewcommand\appendixtocname{Приложения}
+
+
 
 %%% Ссылки
 %\usepackage[superscript]{cite} % Ссылки в верхних индексах
@@ -107,26 +130,26 @@
 %\addto\captionsrussian{\def\refname{Список источников}}
 
 \usepackage[%
-backend=biber,% движок
-bibencoding=utf8,% кодировка bib файла
-sorting=none,% настройка сортировки списка литературы
-style=gost-numeric,% стиль цитирования и библиографии (по ГОСТ)
-language=autobib,% получение языка из babel/polyglossia, default: autobib % если ставить autocite или auto, то цитаты в тексте с указанием страницы, получат указание страницы на языке оригинала
-autolang=other,% многоязычная библиография
-clearlang=true,% внутренний сброс поля language, если он совпадает с языком из babel/polyglossia
-defernumbers=true,% нумерация проставляется после двух компиляций, зато позволяет выцеплять библиографию по ключевым словам и нумеровать не из большего списка
-sortcites=true,% сортировать номера затекстовых ссылок при цитировании (если в квадратных скобках несколько ссылок, то отображаться будут отсортированно, а не абы как)
-doi=false,% Показывать или нет ссылки на DOI
-isbn=false,% Показывать или нет ISBN, ISSN, ISRN
-mincitenames=3,
-maxcitenames=3,
-maxbibnames=3,
+	backend=biber,% движок
+	bibencoding=utf8,% кодировка bib файла
+	sorting=none,% настройка сортировки списка литературы
+	style=gost-numeric,% стиль цитирования и библиографии (по ГОСТ)
+	language=autobib,% получение языка из babel/polyglossia, default: autobib % если ставить autocite или auto, то цитаты в тексте с указанием страницы, получат указание страницы на языке оригинала
+	autolang=other,% многоязычная библиография
+	clearlang=true,% внутренний сброс поля language, если он совпадает с языком из babel/polyglossia
+	defernumbers=true,% нумерация проставляется после двух компиляций, зато позволяет выцеплять библиографию по ключевым словам и нумеровать не из большего списка
+	sortcites=true,% сортировать номера затекстовых ссылок при цитировании (если в квадратных скобках несколько ссылок, то отображаться будут отсортированно, а не абы как)
+	doi=false,% Показывать или нет ссылки на DOI
+	isbn=false,% Показывать или нет ISBN, ISSN, ISRN
+	mincitenames=3,
+	maxcitenames=3,
+	maxbibnames=3,
 ]{biblatex}
 
 \addbibresource{include/references.bib}
 
 \DefineBibliographyStrings{russian}{%
-		bibliography = {Список источников},
+	bibliography = {Список источников},
 }
 
 %\renewcommand{\baselinestretch}{1.15}
@@ -157,21 +180,6 @@ maxbibnames=3,
 \usepackage{multicol} % Несколько колонок
 
 
-\usepackage{titlesec}
-\titleformat{\section}{\large\normalfont\bfseries}{\thesection.}{0.2em}{}
-
-\titleformat{\subsection}{\large\normalfont\bfseries}{\thesection.}{0.2em}{}
-\titleformat{\subsection}{\large\normalfont\bfseries\filcenter}{}{0.4em}{}
-\titleformat{\subsubsection}{\normalfont\bfseries}{}{0.4em}{}
-
-
-
-%%% Заголовки
-\providecommand\phantomsection{}
-%\newcommand\schap[1]{\chapter*{#1} \addcontentsline{toc}{chapter}{#1} \phantomsection}
-\newcommand\ssect[1]{\section*{#1} \phantomsection \addcontentsline{toc}{section}{#1} \markboth{#1}{#1}}
-\newcommand{\rwn}{\the\numexpr\value{rownum}-1\relax}
-
 
 
 \renewcommand{\epsilon}{\ensuremath{\varepsilon}}
@@ -185,22 +193,63 @@ maxbibnames=3,
 
 \newcommand{\bhline}[1]{\noalign{\hrule height #1pt}}
 
-\usepackage{titlesec}
-\titleformat{\section}{\Large\normalfont\bfseries}{\arabic{section}.}{0.5ex}{}
-\titleformat{\subsection}{\large\normalfont\bfseries}{\arabic{section}.\arabic{subsection}.}{0.5ex}{}
-\titleformat{\subsubsection}{\normalfont\bfseries}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.}{0.5ex}{}
+
 
 \renewcommand{\theenumii}{\arabic{enumi}.}
 \renewcommand{\theenumii}{\arabic{enumi}.\arabic{enumii}}
 \renewcommand{\theenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
 
-%\usepackage{xassoccnt}
-%\NewTotalDocumentCounter{totalfigures}
-%\NewTotalDocumentCounter{totaltables}
-%\DeclareAssociatedCounters{figure}{totalfigures}
-%\DeclareAssociatedCounters{table}{totaltables}
+% \usepackage{xassoccnt}
+% \NewTotalDocumentCounter{totalfigures}
+% \NewTotalDocumentCounter{totaltables}
+% \DeclareAssociatedCounters{figure}{totalfigures}
+% \DeclareAssociatedCounters{table}{totaltables}
 
-\usepackage{listings}
+% \usepackage{listings}
+% \usepackage{matlab-prettifier}
 
+\usepackage{minted}
+\usemintedstyle{friendly_grayscale}
+\renewcommand\theFancyVerbLine{\normalsize\arabic{FancyVerbLine}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newcommand*{\figoneendian}{\totalfigures~рисунок}
+\newcommand*{\figfourendian}{\totalfigures~рисунка}
+\newcommand*{\figfiveendian}{\totalfigures~рисунков}
+
+% Расчёт значений для общего числа рисунков
+\newcommand*{\printtotfig}[1][,]{%
+	\newbool{less11Q}%
+	\newbool{greater19Q}%
+	\boolfalse{less11Q}%
+	\boolfalse{greater19Q}%
+	\newcounter{Ptempnumexpr}%
+	\newcounter{Pwordindex}%
+	\setcounter{Ptempnumexpr}{0}%
+	\addtocounter{Ptempnumexpr}{\numexpr\totalfigures-100*(\totalfigures/100)}%
+	\ifnumequal{\totalfigures}{-1}%
+	{??#1}%
+	{\ifnumequal{\totalfigures}{0}{}%
+		{\ifnumless{\value{Ptempnumexpr}}{11}{\booltrue{less11Q}}{}%
+			\ifnumgreater{\value{Ptempnumexpr}}{19}{\booltrue{greater19Q}}{}%
+			\ifboolexpr{bool {less11Q} or bool {greater19Q}}%
+			{\setcounter{Pwordindex}{0}%
+				\addtocounter{Pwordindex}{\numexpr\value{Ptempnumexpr}-10*(\value{Ptempnumexpr}/10)}%
+				\ifnumequal{\value{Pwordindex}}{1}% Окончание для 1
+				{\figoneendian}%
+				{\ifnumequal{\value{Pwordindex}}{2}% Окончание для 4
+					{\figfourendian}%
+					{\ifnumequal{\value{Pwordindex}}{3}%
+						{\figfourendian#1}%
+						{\ifnumequal{\value{Pwordindex}}{4}%
+							{\figfourendian}%
+							{\figfiveendian}% Окончание для 5
+						}%
+					}%
+				}%
+			}%
+			{\figfiveendian}% Окончане для 5
+		}%
+	}%
+}
