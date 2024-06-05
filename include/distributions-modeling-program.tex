@@ -5,7 +5,8 @@
     linenos,
     breaklines,
     frame=single,
-    framesep=10pt
+    framesep=10pt,
+    fontsize=\small
 ]{matlab}
 function [distributionValues,phases] = distribution_former(dx,f, phi,amp_dB)
 if(size(phi) ~= size(amp_dB))
@@ -27,7 +28,8 @@ end
     linenos,
     breaklines,
     frame=single,
-    framesep=10pt
+    framesep=10pt,
+    fontsize=\small
 ]{matlab}
 function [channel_res,theta] = aec_simulation(dVals,dx,f, resolution, theta)
 if nargin < 4
